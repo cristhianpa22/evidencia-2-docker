@@ -73,10 +73,10 @@ jobs:
           username: ${{ secrets.SERVER_USER}}
           key: ${{ secrets.SERVER_SSH_KEY}}
           script: |
-            cd ~/docker
+            cd ~/evidencia-2-docker
             docker compose pull app_backend
             docker compose up -d --force-recreate app_backend
             
 
-
+ocker
   
