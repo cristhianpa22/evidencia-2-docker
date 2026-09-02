@@ -64,7 +64,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Subir la imagen a Docker Hub
-        run: docker push cristhianpa22/my-app-app_backend:latest
+        run: docker push cristhianpa22/evidencia-2-docker:latest
          
       - name: Desplegar en servidor cloud
         uses: appleboy/ssh-action@v1.0.3
