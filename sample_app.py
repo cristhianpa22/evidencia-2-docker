@@ -9,7 +9,7 @@ import os
 BD_CONFIG = {
 	"host": "servidor-bd",
 	"user": "root",
-	"password": os.getenv("MYSQL_ROOT_PASSWORD"),
+	"password": "sena123",
 	"database": os.getenv("MYSQL_DATABASE"),
 	"connect_timeout":3,
 	"cursorclass" : pymysql.cursors.DictCursor,
