@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <title>docker </title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link>
+</head>
+
+<body>
+
+   <main >
+        <section class="card card2">
+            <h2>Estado de la Base de Datos:{{ db_status }}</h2>
+            <form action="/registrar" method="POST">
+                <div class="form-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" name="nombre_completo" required placeholder="Ej: Cristhian Padilla">
+                </div>
+
+                <div class="form-group">
+                    <label>Número de Documento</label>
+                    <input type="text" name="numero_documento" required placeholder="Ej: 1005037880">
+                </div>
+
+                <div class="form-group">
+                    <label>Ficha</label>
+                    <input type="text" name="ficha" required placeholder="Ej: 2683320">
+                </div>
+
+                <button type="submit">Registrar Aprendiz</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h3>Lista de Aprendices</h3>
+            
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre Completo</th>
+                            <th>N° Documento</th>
+                            <th>Ficha</th>
+                            <th>Fecha Creación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for aprendiz in aprendices %}
+                        <tr>
+                            <td>{{ aprendiz.nombre_completo }}</td>
+                            <td>{{ aprendiz.numero_documento }}</td>
+                            <td>{{ aprendiz.ficha }}</td>
+                            <td>{{ aprendiz.creado_en }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="vacio">No hay aprendices registrados aún.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            
+        </section>
+        
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+services:
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: proxy-manager
+    restart: always
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - ./npm_data:/data
+      - ./npm_letsencrypt:/etc/letsencrypt
+    networks:
+      - red-cba
+
+  servidor-bd:
+    image: mysql:8.0
+    container_name: servidor-bd
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - red-cba
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  app_backend:
+    image: cristhianpa22/evidencia-2-docker:latest
+    container_name: app-backend-ejemplo
+    environment:
+      FLASK_ENV: development
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    networks:
+      - red-cba
+    depends_on:
+      - servidor-bd
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:5050/ || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: always
+    ports:
+      - "3001:3001"
+    volumes:
+      - uptime-kuma-data:/app/data
+    networks:
+      - red-cba
+
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8080:8080"
+    networks:
+      - red-cba
+    
+    
+  
+
+networks:
+  red-cba:
+    name: red-cba-ejemplo
+
+volumes:
+  mysql-data:
+    name: mysql-data
+  uptime-kuma-data:
+    name: uptime-kuma-data
