@@ -1,4 +1,4 @@
-FROM python
+FROM python:3.8
 RUN apt-get update && apt-get upgrade -y
 WORKDIR /home/capsdevp/Documentos/workspace/docker/evidencia_2/
 COPY requirements.txt .
